@@ -23,6 +23,8 @@
 import config as cf
 import sys
 import controller
+import prettytable as pt
+from prettytable import PrettyTable, ALL
 from DISClib.ADT import list as lt
 assert cf
 
@@ -71,7 +73,51 @@ while True:
     elif int(inputs[0]) == 2:
         print("\nCargando información de ufos ....")
         controller.loadData(cont, ufosfile)
+        
+        total_ufos = lt.size(cont['ufos'])
+
+        i = 1
+        primeros_5 = lt.newList()
+        while i <= 5:
+            x = lt.getElement(cont['ufos'], i) 
+            lt.addLast(primeros_5, x)
+            i += 1
+
+        j = 4
+        ultimos_5 = lt.newList()
+        while j >= 0:
+            x = lt.getElement(cont['ufos'], total_ufos - j)
+            lt.addLast(ultimos_5, x)
+            j -= 1
+
         print('Casos de ufos cargados: ' + str(controller.ufosSize(cont)))
+        
+        print('The first 5 ufo cases are:')   
+
+        tabla1 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
+
+        tabla1.max_width = 9
+
+        for ufo in lt.iterator(primeros_5):
+            tabla1.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
+
+        tabla1.hrules = ALL
+
+        print(tabla1)
+        print('\n')
+
+        print('The last 5 ufo cases are:')
+
+        tabla2 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
+
+        tabla2.max_width = 9
+
+        for obra in lt.iterator(ultimos_5):
+            tabla2.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
+
+        tabla2.hrules = ALL
+
+        print(tabla2)
 
     else:
         sys.exit(0)
