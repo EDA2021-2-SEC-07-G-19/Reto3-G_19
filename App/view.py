@@ -135,6 +135,20 @@ while True:
         print('There are ' + str(getUfos[1]) + ' sightings at the: ' + str(ciudad.upper()) + ' city')
         print('The first 3 and last 3 UFO sightings in the city are: ')
 
+        tabla3 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
+
+        tabla3.max_width = 25
+
+        for ufo in lt.iterator(getUfos[2]):
+            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+    
+        for ufo in lt.iterator(getUfos[3]):
+            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+
+        tabla3.hrules = ALL
+
+        print(tabla3)
+
     else:
         sys.exit(0)
 sys.exit(0)

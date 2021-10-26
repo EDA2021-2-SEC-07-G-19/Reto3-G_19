@@ -26,11 +26,14 @@
 
 
 import config as cf
+import datetime as dt
+import time
+import math
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as ms
 assert cf
 
 """
@@ -91,8 +94,24 @@ def getUfosByCity(mapa, ciudad):
     llave_valor_ciudad = mp.get(mapa, ciudad)
     lt_ciudad = me.getValue(llave_valor_ciudad)
     total_casos_ciudad = lt.size(lt_ciudad)
+    
+    lt_ciudad_ord = ms.sort(lt_ciudad, cmpUfosByDate)
 
-    return total_ciudades, total_casos_ciudad
+    i = 1
+    primeros_3 = lt.newList()
+    while i <= 3:
+        x = lt.getElement(lt_ciudad_ord, i)
+        lt.addLast(primeros_3, x)
+        i += 1
+
+    j = 2
+    ultimos_3 = lt.newList()
+    while j >= 0:
+        x = lt.getElement(lt_ciudad_ord, total_casos_ciudad - j)
+        lt.addLast(ultimos_3, x)
+        j -= 1
+
+    return total_ciudades, total_casos_ciudad, primeros_3, ultimos_3
 
 #======================
 # Funciones de consulta
@@ -121,6 +140,21 @@ def cmpMapCity(keyname, city):
     else:
         return -1
 
+def cmpUfosByDate(ufo1, ufo2):
+    dateufo1 = ufo1['datetime']
+    dateufo2 = ufo2['datetime']
+
+    if dateufo1 == '':
+        dateufo1 = '0001-01-01 00:00'
+
+    if dateufo2 == '':
+        dateufo2 = '0001-01-01 00:00'
+
+    if (dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')) < (dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')):
+        return 1
+    
+    else:
+        return 0
 #==========================
 # Funciones de ordenamiento
 #==========================
