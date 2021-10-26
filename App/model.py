@@ -36,15 +36,51 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-
+#========================
 # Construccion de modelos
+#========================
 
+def newAnalyzer():
+    analyzer = {'ufos': None,
+                'cityIndex': None,
+                'durationIndex': None,
+                'datetimeIndex': None,
+                }
+
+    analyzer['ufos'] = lt.newList(datastructure = 'ARRAY_LIST', cmpfunction = compareDates)
+
+    return analyzer
+
+#===============================================
 # Funciones para agregar informacion al catalogo
+#===============================================
+def addUfo(analyzer, ufo):
+    lt.addLast(analyzer['ufos'], ufo)
+    #updateDateIndex(analyzer[''], ufo)
+    return analyzer
 
+#=================================
 # Funciones para creacion de datos
+#=================================
 
+
+#======================
 # Funciones de consulta
+#======================
+def ufosSize(analyzer):
+    return lt.size(analyzer['ufos'])
 
+#=================================================================
 # Funciones utilizadas para comparar elementos dentro de una lista
+#=================================================================
+def compareDates(date1, date2):
+    if (date1 == date2):
+        return 0
+    elif (date1 > date2):
+        return 1
+    else:
+        return -1
 
+#==========================
 # Funciones de ordenamiento
+#==========================

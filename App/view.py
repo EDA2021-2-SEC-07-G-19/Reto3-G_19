@@ -34,24 +34,44 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
-def printMenu():
-    print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+#===================
+#Ruta a los archivos
+#===================
+ufosfile = 'UFOS//UFOS-utf8-small.csv'
+cont = None
 
-catalog = None
+#==============
+#Menú Principal
+#==============
+def printMenu():
+    print("\n")
+    print("*******************************************")
+    print("Bienvenido")
+    print("1- Inicializar Analizador")
+    print("2- Cargar información de ufos")
+    print("3- Requerimiento 1")
+    print("4- Requerimiento 2")
+    print("5- Requerimiento 3")
+    print("6- Requerimiento 4")
+    print("7- Requerimiento 5")
+    print("0- Salir")
+    print("*******************************************")
 
 """
 Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
+    inputs = input('Seleccione una opción para continuar\n>')
+    
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("\nInicializando....")
+        cont = controller.init()
 
     elif int(inputs[0]) == 2:
-        pass
+        print("\nCargando información de ufos ....")
+        controller.loadData(cont, ufosfile)
+        print('Casos de ufos cargados: ' + str(controller.ufosSize(cont)))
 
     else:
         sys.exit(0)
