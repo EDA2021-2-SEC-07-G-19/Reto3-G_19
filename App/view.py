@@ -96,7 +96,7 @@ while True:
 
         tabla1 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
 
-        tabla1.max_width = 9
+        tabla1.max_width = 8
 
         for ufo in lt.iterator(primeros_5):
             tabla1.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
@@ -110,7 +110,7 @@ while True:
 
         tabla2 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
 
-        tabla2.max_width = 9
+        tabla2.max_width = 8
 
         for obra in lt.iterator(ultimos_5):
             tabla2.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
@@ -118,6 +118,22 @@ while True:
         tabla2.hrules = ALL
 
         print(tabla2)
+    
+    elif int(inputs[0]) == 3:
+        mapa = cont['cityIndex']
+
+        ciudad = input('Ingrese el nombre de la ciudad sobre la cual desea calcular los casos de ufos: \n>')
+        ciudad_def = ciudad.lower()
+
+        requerimiento1 = controller.Requerimiento1(mapa, ufo)
+        getUfos = controller.getUfosByCity(requerimiento1, ciudad_def)
+
+        print('=============== Req No. 1 Inputs ===============')
+        print('UFO Sightings in the city of ' + str(ciudad.upper()) + '\n')
+        print('=============== Req No. 1 Answer ===============')
+        print('There are ' + str(getUfos[0]) + ' different cities with UFO Sightings' + '\n')
+        print('There are ' + str(getUfos[1]) + ' sightings at the: ' + str(ciudad.upper()) + ' city')
+        print('The first 3 and last 3 UFO sightings in the city are: ')
 
     else:
         sys.exit(0)

@@ -28,6 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
+from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
@@ -47,7 +48,12 @@ def newAnalyzer():
                 'datetimeIndex': None,
                 }
 
-    analyzer['ufos'] = lt.newList(datastructure = 'ARRAY_LIST', cmpfunction = compareDates)
+    analyzer['ufos'] = lt.newList(datastructure = 'ARRAY_LIST', cmpfunction = cmpListDate)
+    
+    analyzer['cityIndex'] = mp.newMap(500,
+                                    maptype = 'PROBING',
+                                    loadfactor = 0.5,
+                                    comparefunction = cmpMapCity)
 
     return analyzer
 
@@ -56,27 +62,61 @@ def newAnalyzer():
 #===============================================
 def addUfo(analyzer, ufo):
     lt.addLast(analyzer['ufos'], ufo)
-    #updateDateIndex(analyzer[''], ufo)
+    Requerimiento1(analyzer['cityIndex'], ufo)
+    
     return analyzer
+
+def Requerimiento1(mapa, ufo):
+    city = ufo['city']
+    llave_valor = mp.get(mapa, city)
+    
+    if llave_valor is None:
+        lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
+        lt.addLast(lt_ufos2, ufo)
+        mp.put(mapa, city, lt_ufos2)
+    
+    else:
+        lt_ufos_valor = me.getValue(llave_valor)
+        lt.addLast(lt_ufos_valor, ufo)
+
+    return mapa
 
 #=================================
 # Funciones para creacion de datos
 #=================================
+def getUfosByCity(mapa, ciudad):
+    keys_ciudades = mp.keySet(mapa)
+    total_ciudades = lt.size(keys_ciudades)
 
+    llave_valor_ciudad = mp.get(mapa, ciudad)
+    lt_ciudad = me.getValue(llave_valor_ciudad)
+    total_casos_ciudad = lt.size(lt_ciudad)
+
+    return total_ciudades, total_casos_ciudad
 
 #======================
 # Funciones de consulta
 #======================
 def ufosSize(analyzer):
+
     return lt.size(analyzer['ufos'])
 
 #=================================================================
 # Funciones utilizadas para comparar elementos dentro de una lista
 #=================================================================
-def compareDates(date1, date2):
+def cmpListDate(date1, date2):
     if (date1 == date2):
         return 0
     elif (date1 > date2):
+        return 1
+    else:
+        return -1
+
+def cmpMapCity(keyname, city):
+    city_entry = me.getKey(city)
+    if (keyname == city_entry):
+        return 0
+    elif (keyname > city_entry):
         return 1
     else:
         return -1

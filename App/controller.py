@@ -48,6 +48,13 @@ def loadData(analyzer, ufosfile):
     
     return analyzer
 
+#===================================
+#Funciones para la creación de datos
+#===================================
+def getUfosByCity(mapa, ciudad):
+
+    return model.getUfosByCity(mapa, ciudad)
+
 #==========================
 # Funciones de ordenamiento
 #==========================
@@ -55,6 +62,10 @@ def loadData(analyzer, ufosfile):
 #========================================
 # Funciones de consulta sobre el catálogo
 #========================================
+def Requerimiento1(mapa, ufo):
+
+    return model.Requerimiento1(mapa, ufo)
+
 def ufosSize(analyzer):
     
     return model.ufosSize(analyzer)
