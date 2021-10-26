@@ -148,6 +148,36 @@ while True:
         tabla3.hrules = ALL
 
         print(tabla3)
+    
+    elif int(inputs[0]) == 4:
+        mapa = cont['durationIndex']
+
+        limit_inf = input('Ingrese el límite inferior de duración en segundos: \n>')
+        limit_sup = input('Ingrese el límite superior de duración en segundos: \n>')
+
+        requerimiento2 = controller.Requerimiento2(mapa, ufo)
+        getUfos2 = controller.getUfosByDuration(requerimiento2, limit_inf, limit_sup)
+
+        print('=============== Req No. 2 Inputs ===============')
+        print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + ' seconds' + '\n')
+        print('=============== Req No. 2 Answer ===============')
+        print('There are ' + str(getUfos2[0]) + ' different UFO sightings durations' + '\n')
+        print('There are ' + str(getUfos2[1]) + ' sightings between: ' + str(limit_inf) + ' and ' + str(limit_sup) + ' duration')
+        print('The first 3 and last 3 UFO sightings in the city are: ')
+
+        tabla3 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
+
+        tabla3.max_width = 25
+
+        for ufo in lt.iterator(getUfos2[2]):
+            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+    
+        for ufo in lt.iterator(getUfos2[3]):
+            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+
+        tabla3.hrules = ALL
+
+        print(tabla3)
 
     else:
         sys.exit(0)
