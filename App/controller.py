@@ -59,6 +59,14 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
 
     return model.getUfosByDuration(mapa, limit_inf, limit_sup)
 
+def getUfosByDatetime(mapa, limit_inf, limit_sup):
+
+    return model.getUfosByDatetime(mapa, limit_inf, limit_sup)
+
+def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
+
+    return model.getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup)
+
 #==========================
 # Funciones de ordenamiento
 #==========================
@@ -73,6 +81,14 @@ def Requerimiento1(mapa, ufo):
 def Requerimiento2(mapa, ufo):
 
     return model.Requerimiento2(mapa, ufo)
+
+def Requerimiento4(mapa, ufo):
+
+    return model.Requerimiento4(mapa, ufo)
+
+def Requerimiento5(mapa, ufo):
+
+    return model.Requerimiento5(mapa, ufo)
 
 def ufosSize(analyzer):
     

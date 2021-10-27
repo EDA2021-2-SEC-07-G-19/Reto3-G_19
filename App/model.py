@@ -34,6 +34,7 @@ from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import shellsort as ss
 assert cf
 
 """
@@ -49,6 +50,7 @@ def newAnalyzer():
                 'cityIndex': None,
                 'durationIndex': None,
                 'datetimeIndex': None,
+                'longitudeIndex':None,
                 }
 
     analyzer['ufos'] = lt.newList(datastructure = 'ARRAY_LIST', cmpfunction = cmpListDate)
@@ -60,6 +62,10 @@ def newAnalyzer():
 
     analyzer['durationIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDuration)
 
+    analyzer['datetimeIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDate)
+
+    analyzer['longitudeIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapLongitude)
+
     return analyzer
 
 #===============================================
@@ -69,10 +75,12 @@ def addUfo(analyzer, ufo):
     lt.addLast(analyzer['ufos'], ufo)
     Requerimiento1(analyzer['cityIndex'], ufo)
     Requerimiento2(analyzer['durationIndex'], ufo)
+    Requerimiento4(analyzer['datetimeIndex'], ufo)
+    Requerimiento5(analyzer['longitudeIndex'], ufo)
     
     return analyzer
 
-def Requerimiento1(mapa, ufo):
+def Requerimiento1(mapa, ufo): #IMPORTANTE!!! Escogí una tabla de hash para hacer este requerimiento por lo cual no puedo retornar nada de info de árboles. Fue recomendado por el profesor y de hecho ya está completamente implementado
     city = ufo['city']
     llave_valor = mp.get(mapa, city)
     
@@ -95,6 +103,38 @@ def Requerimiento2(mapa, ufo):
         lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
         lt.addLast(lt_ufos2, ufo)
         om.put(mapa, duration, lt_ufos2)
+
+    else:
+        lt_ufos_valor = me.getValue(llave_valor)
+        lt.addLast(lt_ufos_valor, ufo)
+
+    return mapa
+
+def Requerimiento4(mapa, ufo):
+    datetime = ufo['datetime']
+    datetime2 = dt.datetime.strptime(datetime, '%Y-%m-%d %H:%M:%S')
+    llave_valor = om.get(mapa, str(datetime2.date()))
+
+    if llave_valor is None:
+        lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
+        lt.addLast(lt_ufos2, ufo)
+        om.put(mapa, str(datetime2.date()), lt_ufos2)
+    
+    else:
+        lt_ufos_valor = me.getValue(llave_valor)
+        lt.addLast(lt_ufos_valor, ufo)
+
+    return mapa
+
+def Requerimiento5(mapa, ufo):
+    longitude = ufo['longitude']
+    #longitude = round(longitude, 2)
+    llave_valor = om.get(mapa, longitude)
+
+    if llave_valor is None:
+        lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
+        lt.addLast(lt_ufos2, ufo)
+        om.put(mapa, longitude, lt_ufos2)
 
     else:
         lt_ufos_valor = me.getValue(llave_valor)
@@ -169,6 +209,74 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
 
     return total_duraciones, contador_ufos, primeros_3, ultimos_3
 
+def getUfosByDatetime(mapa, limit_inf, limit_sup):
+    total_datetime = om.size(mapa)
+    lt_valores = om.values(mapa, limit_inf, limit_sup)
+
+    contador_ufos = 0
+    lt_ufos_rango = lt.newList(datastructure = 'ARRAY_LIST')
+    for lista in lt.iterator(lt_valores):
+        for ufo in lt.iterator(lista):
+            contador_ufos += 1
+            lt.addLast(lt_ufos_rango, ufo)
+    
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
+    tam = lt.size(lt_ufos_rango_ord)
+
+    i = 1
+    primeros_3 = lt.newList()
+    while i <= 3:
+        x = lt.getElement(lt_ufos_rango_ord, i)
+        lt.addLast(primeros_3, x)
+        i += 1
+
+    j = 2
+    ultimos_3 = lt.newList()
+    while j >= 0:
+        x = lt.getElement(lt_ufos_rango_ord, tam - j)
+        lt.addLast(ultimos_3, x)
+        j -= 1
+
+    for ufo in lt.iterator(primeros_3):
+        if ufo['state'] == '':
+            ufo['state'] = 'Not Available'
+
+    for ufo in lt.iterator(ultimos_3):
+        if ufo['state'] == '':
+            ufo['state'] = 'Not Available'
+
+    return total_datetime, contador_ufos, primeros_3, ultimos_3
+
+def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
+    lt_valores_lon = om.values(mapa, lon_inf, lon_sup)
+
+    lt_ufos_rango = lt.newList(datastructure = 'ARRAY_LIST')
+    for lista in lt.iterator(lt_valores_lon):
+        for ufo in lt.iterator(lista):
+            latitud = round(float(ufo['latitude']),2)
+            if float(lat_inf) <= latitud <= float(lat_sup):
+                lt.addLast(lt_ufos_rango, ufo)
+    
+    total_lon_lat = lt.size(lt_ufos_rango)
+
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
+
+    i = 1
+    primeros_5 = lt.newList(datastructure = 'ARRAY_LIST')
+    while i <= 5:
+        x = lt.getElement(lt_ufos_rango_ord, i) 
+        lt.addLast(primeros_5, x)
+        i += 1
+
+    j = 4
+    ultimos_5 = lt.newList(datastructure = 'ARRAY_LIST')
+    while j >= 0:
+        x = lt.getElement(lt_ufos_rango_ord, total_lon_lat - j)
+        lt.addLast(ultimos_5, x)
+        j -= 1
+
+    return total_lon_lat, primeros_5, ultimos_5
+
 #======================
 # Funciones de consulta
 #======================
@@ -197,9 +305,25 @@ def cmpMapCity(keyname, city):
         return -1
 
 def cmpMapDuration(duracion1, duracion2):
-    if (float(duracion1) == float(duracion2)):
+    if (duracion1 == duracion2):
         return 0
-    elif (float(duracion1) > float(duracion2)):
+    elif (duracion1 > duracion2):
+        return 1
+    else:
+        return -1
+
+def cmpMapDate(dateufo1, dateufo2):
+    if (dateufo1 == dateufo2):
+        return 0
+    elif (dateufo1 > dateufo2):
+        return 1
+    else:
+        return -1
+
+def cmpMapLongitude(longitude1, longitude2):
+    if (longitude1 == longitude2):
+        return 0
+    elif (longitude1 > longitude2):
         return 1
     else:
         return -1
@@ -219,14 +343,6 @@ def cmpUfosByDate(ufo1, ufo2):
     
     else:
         return 0
-
-def cmpUfosByDuration(duracion1, duracion2):
-    if (duracion1 == duracion2):
-        return 0
-    elif (duracion1 < duracion2):
-        return 1
-    else:
-        return -1
       
 #==========================
 # Funciones de ordenamiento
