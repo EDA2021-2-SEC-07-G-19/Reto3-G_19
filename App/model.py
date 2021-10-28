@@ -128,7 +128,6 @@ def Requerimiento4(mapa, ufo):
 
 def Requerimiento5(mapa, ufo):
     longitude = ufo['longitude']
-    #longitude = round(longitude, 2)
     llave_valor = om.get(mapa, longitude)
 
     if llave_valor is None:

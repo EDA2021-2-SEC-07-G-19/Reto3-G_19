@@ -118,14 +118,22 @@ while True:
         tabla2.hrules = ALL
 
         print(tabla2)
+
+        mapa1 = cont['cityIndex']
+        mapa2 = cont['durationIndex']
+        mapa4 = cont['datetimeIndex']
+        mapa5 = cont['longitudeIndex']
+
+        requerimiento1 = controller.Requerimiento1(mapa1, ufo)
+        requerimiento2 = controller.Requerimiento2(mapa2, ufo)
+        requerimiento4 = controller.Requerimiento4(mapa4, ufo)
+        requerimiento5 = controller.Requerimiento5(mapa5, ufo)
     
     elif int(inputs[0]) == 3:
-        mapa = cont['cityIndex']
 
         ciudad = input('Ingrese el nombre de la ciudad sobre la cual desea calcular los casos de ufos: \n>')
         ciudad_def = ciudad.lower()
 
-        requerimiento1 = controller.Requerimiento1(mapa, ufo)
         getUfos = controller.getUfosByCity(requerimiento1, ciudad_def)
 
         print('=============== Req No. 1 Inputs ===============')
@@ -150,12 +158,10 @@ while True:
         print(tabla3)
     
     elif int(inputs[0]) == 4:
-        mapa = cont['durationIndex']
 
         limit_inf = input('Ingrese el límite inferior de duración en segundos: \n>')
         limit_sup = input('Ingrese el límite superior de duración en segundos: \n>')
 
-        requerimiento2 = controller.Requerimiento2(mapa, ufo)
         getUfos2 = controller.getUfosByDuration(requerimiento2, limit_inf, limit_sup)
 
         print('=============== Req No. 2 Inputs ===============')
@@ -183,12 +189,10 @@ while True:
         pass
 
     elif int(inputs[0]) == 6:
-        mapa = cont['datetimeIndex']
 
         limit_inf = input('Ingrese el límite inferior de duración en el formato AAAA-MM-DD: \n>')
         limit_sup = input('Ingrese el límite superior de duración en el formato AAAA-MM-DD: \n>')
 
-        requerimiento4 = controller.Requerimiento4(mapa, ufo)
         getUfos4 = controller.getUfosByDatetime(requerimiento4, limit_inf, limit_sup)
 
         print('=============== Req No. 4 Inputs ===============')
@@ -213,14 +217,12 @@ while True:
         print(tabla4)
     
     elif int(inputs[0]) == 7:
-        mapa = cont['longitudeIndex']
 
         lon_inf = input('Ingrese el limite inferior para la longitud (con 2 cifras decimales): \n>')
         lon_sup = input('Ingrese el limite superior para la longitud (con 2 cifras decimales): \n>')
         lat_inf = input('Ingrese el limite inferior para la latitud (con 2 cifras decimales): \n>')
         lat_sup = input('Ingrese el limite superior para la latitud (con 2 cifras decimales): \n>')
 
-        requerimiento5 = controller.Requerimiento5(mapa, ufo)
         getUfos5 = controller.getUfosByLonLat(requerimiento5, lon_inf, lon_sup, lat_inf, lat_sup)
 
         print('=============== Req No. 5 Inputs ===============')
