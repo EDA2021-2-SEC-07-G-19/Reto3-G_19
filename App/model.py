@@ -27,14 +27,11 @@
 
 import config as cf
 import datetime as dt
-import time
-import math
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
-from DISClib.Algorithms.Sorting import shellsort as ss
 assert cf
 
 """
@@ -151,6 +148,25 @@ def getUfosByCity(mapa, ciudad):
     llave_valor_ciudad = mp.get(mapa, ciudad)
     lt_ciudad = me.getValue(llave_valor_ciudad)
     total_casos_ciudad = lt.size(lt_ciudad)
+
+    lt_rep = lt.newList(datastructure = 'ARRAY_LIST')
+    diccionario_rep = {}
+    for llave in lt.iterator(keys_ciudades):
+        llave_valor = mp.get(mapa, llave)
+        valor = me.getValue(llave_valor)
+        tam = lt.size(valor)
+        diccionario_rep[llave] = tam
+        lt.addLast(lt_rep, diccionario_rep)
+    
+    for dicc in lt.iterator(lt_rep):
+        if dicc == {}:
+            ciudad_rep = 'N.A'
+            rep = 0
+        
+        else:
+            ciudad_rep = max(dicc, key = dicc.get)
+            todas_laas_rep = dicc.values()
+            rep = max(todas_laas_rep)
     
     lt_ciudad_ord = ms.sort(lt_ciudad, cmpUfosByDate)
 
@@ -168,7 +184,7 @@ def getUfosByCity(mapa, ciudad):
         lt.addLast(ultimos_3, x)
         j -= 1
 
-    return total_ciudades, total_casos_ciudad, primeros_3, ultimos_3
+    return total_ciudades, total_casos_ciudad, primeros_3, ultimos_3, ciudad_rep, rep
 
 def getUfosByDuration(mapa, limit_inf, limit_sup):
     total_duraciones = om.size(mapa)
@@ -184,6 +200,11 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
     lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
     tam = lt.size(lt_ufos_rango_ord)
 
+    mayor_llave = om.maxKey(mapa)
+    mayor_llave_valor = om.get(mapa, mayor_llave)
+    valor_mayor_llave = me.getValue(mayor_llave_valor)
+    tam_mayor_llave = lt.size(valor_mayor_llave)
+
     i = 1
     primeros_3 = lt.newList()
     while i <= 3:
@@ -206,7 +227,7 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
         if ufo['state'] == '':
             ufo['state'] = 'Not Available'
 
-    return total_duraciones, contador_ufos, primeros_3, ultimos_3
+    return total_duraciones, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
 
 def getUfosByDatetime(mapa, limit_inf, limit_sup):
     total_datetime = om.size(mapa)
@@ -222,6 +243,11 @@ def getUfosByDatetime(mapa, limit_inf, limit_sup):
     lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
     tam = lt.size(lt_ufos_rango_ord)
 
+    mayor_llave = om.minKey(mapa)
+    mayor_llave_valor = om.get(mapa, mayor_llave)
+    valor_mayor_llave = me.getValue(mayor_llave_valor)
+    tam_mayor_llave = lt.size(valor_mayor_llave)
+
     i = 1
     primeros_3 = lt.newList()
     while i <= 3:
@@ -244,7 +270,7 @@ def getUfosByDatetime(mapa, limit_inf, limit_sup):
         if ufo['state'] == '':
             ufo['state'] = 'Not Available'
 
-    return total_datetime, contador_ufos, primeros_3, ultimos_3
+    return total_datetime, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
 
 def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
     lt_valores_lon = om.values(mapa, lon_inf, lon_sup)

@@ -139,8 +139,18 @@ while True:
         print('=============== Req No. 1 Inputs ===============')
         print('UFO Sightings in the city of ' + str(ciudad.upper()) + '\n')
         print('=============== Req No. 1 Answer ===============')
-        print('There are ' + str(getUfos[0]) + ' different cities with UFO Sightings...' + '\n')
-        print('There are ' + str(getUfos[1]) + ' sightings at the: ' + str(ciudad.upper()) + ' city')
+        print('There are ' + str(getUfos[0]) + ' different cities with UFO Sightings...')
+        print('The city with most UFO sightings is: ')
+
+        tabla3_1 = pt.PrettyTable(['City', 'Count'])
+
+        tabla3_1.max_width = 15
+        tabla3_1.add_row([getUfos[4], getUfos[5]])
+        tabla3_1.hrules = ALL
+        print(tabla3_1)
+        print('\n')
+
+        print('There are ' + str(getUfos[1]) + ' sightings at the: ' + str(ciudad.upper()) + ' City')
         print('The first 3 and last 3 UFO sightings in the city are: ')
 
         tabla3 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
@@ -167,23 +177,33 @@ while True:
         print('=============== Req No. 2 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + ' seconds' + '\n')
         print('=============== Req No. 2 Answer ===============')
-        print('There are ' + str(getUfos2[0]) + ' different UFO sightings durations...' + '\n')
+        print('There are ' + str(getUfos2[0]) + ' different UFO sightings durations...')
+        print('The longest UFO sighting is: ')
+
+        tabla4_1 = pt.PrettyTable(['Duration (seconds)', 'Count'])
+
+        tabla4_1.max_width = 15
+        tabla4_1.add_row([getUfos2[4], getUfos2[5]])
+        tabla4_1.hrules = ALL
+        print(tabla4_1)
+        print('\n')
+
         print('There are ' + str(getUfos2[1]) + ' sightings between: ' + str(limit_inf) + ' and ' + str(limit_sup) + ' duration')
         print('The first 3 and last 3 UFO sightings in the duration time are: ')
 
-        tabla3 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
+        tabla4 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
 
-        tabla3.max_width = 25
+        tabla4.max_width = 25
 
         for ufo in lt.iterator(getUfos2[2]):
-            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+            tabla4.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
     
         for ufo in lt.iterator(getUfos2[3]):
-            tabla3.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+            tabla4.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
 
-        tabla3.hrules = ALL
+        tabla4.hrules = ALL
 
-        print(tabla3)
+        print(tabla4)
     
     elif int(inputs[0]) == 5:
         pass
@@ -198,23 +218,33 @@ while True:
         print('=============== Req No. 4 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')
         print('=============== Req No. 4 Answer ===============')
-        print('There are ' + str(getUfos4[0]) + ' different UFO sightings dates [YYYY-MM-DD]...' + '\n')
+        print('There are ' + str(getUfos4[0]) + ' different UFO sightings dates [YYYY-MM-DD]...')
+        print('The oldest UFO sightings date is: ')
+
+        tabla6_1 = pt.PrettyTable(['Date', 'Count'])
+
+        tabla6_1.max_width = 15
+        tabla6_1.add_row([getUfos4[4], getUfos4[5]])
+        tabla6_1.hrules = ALL
+        print(tabla6_1)
+        print('\n')
+
         print('There are ' + str(getUfos4[1]) + ' sightings between: ' + str(limit_inf) + ' and ' + str(limit_sup))
         print('The first 3 and last 3 UFO sightings in this time are: ')
 
-        tabla4 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
+        tabla6 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)'])
 
-        tabla4.max_width = 25
+        tabla6.max_width = 25
 
         for ufo in lt.iterator(getUfos4[2]):
-            tabla4.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+            tabla6.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
     
         for ufo in lt.iterator(getUfos4[3]):
-            tabla4.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
+            tabla6.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)']])
 
-        tabla4.hrules = ALL
+        tabla6.hrules = ALL
 
-        print(tabla4)
+        print(tabla6)
     
     elif int(inputs[0]) == 7:
 
@@ -232,19 +262,19 @@ while True:
         print('There are ' + str(getUfos5[0]) + ' different UFO sightings in the current area' + '\n')
         print('The first 5 and last 5 UFO sightings in this area are: ')
 
-        tabla5 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Latitude', 'Longitude'])
+        tabla7 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Latitude', 'Longitude'])
 
-        tabla5.max_width = 20
+        tabla7.max_width = 20
 
         for ufo in lt.iterator(getUfos5[1]):
-            tabla5.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['latitude'], ufo['longitude']])
+            tabla7.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['latitude'], ufo['longitude']])
     
         for ufo in lt.iterator(getUfos5[2]):
-            tabla5.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['latitude'], ufo['longitude']])
+            tabla7.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['latitude'], ufo['longitude']])
 
-        tabla5.hrules = ALL
+        tabla7.hrules = ALL
 
-        print(tabla5)
+        print(tabla7)
 
     else:
         sys.exit(0)
