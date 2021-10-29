@@ -148,25 +148,6 @@ def getUfosByCity(mapa, ciudad):
     llave_valor_ciudad = mp.get(mapa, ciudad)
     lt_ciudad = me.getValue(llave_valor_ciudad)
     total_casos_ciudad = lt.size(lt_ciudad)
-
-    lt_rep = lt.newList(datastructure = 'ARRAY_LIST')
-    diccionario_rep = {}
-    for llave in lt.iterator(keys_ciudades):
-        llave_valor = mp.get(mapa, llave)
-        valor = me.getValue(llave_valor)
-        tam = lt.size(valor)
-        diccionario_rep[llave] = tam
-        lt.addLast(lt_rep, diccionario_rep)
-    
-    for dicc in lt.iterator(lt_rep):
-        if dicc == {}:
-            ciudad_rep = 'N.A'
-            rep = 0
-        
-        else:
-            ciudad_rep = max(dicc, key = dicc.get)
-            todas_laas_rep = dicc.values()
-            rep = max(todas_laas_rep)
     
     lt_ciudad_ord = ms.sort(lt_ciudad, cmpUfosByDate)
 
@@ -184,7 +165,7 @@ def getUfosByCity(mapa, ciudad):
         lt.addLast(ultimos_3, x)
         j -= 1
 
-    return total_ciudades, total_casos_ciudad, primeros_3, ultimos_3, ciudad_rep, rep
+    return total_ciudades, total_casos_ciudad, primeros_3, ultimos_3
 
 def getUfosByDuration(mapa, limit_inf, limit_sup):
     total_duraciones = om.size(mapa)

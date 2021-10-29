@@ -39,7 +39,7 @@ operación solicitada
 #===================
 #Ruta a los archivos
 #===================
-ufosfile = 'UFOS//UFOS-utf8-small.csv'
+ufosfile = 'UFOS//UFOS-utf8-large.csv'
 cont = None
 
 #==============
@@ -139,16 +139,7 @@ while True:
         print('=============== Req No. 1 Inputs ===============')
         print('UFO Sightings in the city of ' + str(ciudad.upper()) + '\n')
         print('=============== Req No. 1 Answer ===============')
-        print('There are ' + str(getUfos[0]) + ' different cities with UFO Sightings...')
-        print('The city with most UFO sightings is: ')
-
-        tabla3_1 = pt.PrettyTable(['City', 'Count'])
-
-        tabla3_1.max_width = 15
-        tabla3_1.add_row([getUfos[4], getUfos[5]])
-        tabla3_1.hrules = ALL
-        print(tabla3_1)
-        print('\n')
+        print('There are ' + str(getUfos[0]) + ' different cities with UFO Sightings...' + '\n')
 
         print('There are ' + str(getUfos[1]) + ' sightings at the: ' + str(ciudad.upper()) + ' City')
         print('The first 3 and last 3 UFO sightings in the city are: ')
