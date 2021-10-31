@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 import prettytable as pt
+import time
 from prettytable import PrettyTable, ALL
 from DISClib.ADT import list as lt
 assert cf
@@ -94,12 +95,12 @@ while True:
         
         print('The first 5 ufo cases are:')   
 
-        tabla1 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
+        tabla1 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Date Posted', 'Latitude', 'Longitude'])
 
         tabla1.max_width = 8
 
         for ufo in lt.iterator(primeros_5):
-            tabla1.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
+            tabla1.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
 
         tabla1.hrules = ALL
 
@@ -108,33 +109,50 @@ while True:
 
         print('The last 5 ufo cases are:')
 
-        tabla2 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Comments', 'Date Posted', 'Latitude', 'Longitude'])
+        tabla2 = pt.PrettyTable(['Datetime', 'City', 'State', 'Country', 'Shape', 'Duration (seconds)', 'Duration (hours/min)', 'Date Posted', 'Latitude', 'Longitude'])
 
         tabla2.max_width = 8
 
         for obra in lt.iterator(ultimos_5):
-            tabla2.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['comments'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
+            tabla2.add_row([ufo['datetime'], ufo['city'], ufo['state'], ufo['country'], ufo['shape'], ufo['duration (seconds)'], ufo['duration (hours/min)'], ufo['date posted'], ufo['latitude'], ufo['longitude']])
 
         tabla2.hrules = ALL
 
         print(tabla2)
+        print('\n')
 
         mapa1 = cont['cityIndex']
         mapa2 = cont['durationIndex']
         mapa4 = cont['datetimeIndex']
         mapa5 = cont['longitudeIndex']
 
+        start_time = time.process_time()
+
         requerimiento1 = controller.Requerimiento1(mapa1, ufo)
         requerimiento2 = controller.Requerimiento2(mapa2, ufo)
         requerimiento4 = controller.Requerimiento4(mapa4, ufo)
         requerimiento5 = controller.Requerimiento5(mapa5, ufo)
+
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo en el cual se cargan todos los datos es: ' + str(elapsed_time_mseg) + ' ms')
     
     elif int(inputs[0]) == 3:
 
         ciudad = input('Ingrese el nombre de la ciudad sobre la cual desea calcular los casos de ufos: \n>')
         ciudad_def = ciudad.lower()
 
+        start_time = time.process_time()
+
         getUfos = controller.getUfosByCity(requerimiento1, ciudad_def)
+
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo de procesamiento del requerimiento elegido es: ' + str(elapsed_time_mseg) + ' ms' + '\n')
 
         print('=============== Req No. 1 Inputs ===============')
         print('UFO Sightings in the city of ' + str(ciudad.upper()) + '\n')
@@ -163,7 +181,15 @@ while True:
         limit_inf = input('Ingrese el límite inferior de duración en segundos: \n>')
         limit_sup = input('Ingrese el límite superior de duración en segundos: \n>')
 
+        start_time = time.process_time()
+
         getUfos2 = controller.getUfosByDuration(requerimiento2, limit_inf, limit_sup)
+    
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo de procesamiento del requerimiento elegido es: ' + str(elapsed_time_mseg) + ' ms' + '\n')
 
         print('=============== Req No. 2 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + ' seconds' + '\n')
@@ -204,7 +230,15 @@ while True:
         limit_inf = input('Ingrese el límite inferior de duración en el formato AAAA-MM-DD: \n>')
         limit_sup = input('Ingrese el límite superior de duración en el formato AAAA-MM-DD: \n>')
 
+        start_time = time.process_time()
+
         getUfos4 = controller.getUfosByDatetime(requerimiento4, limit_inf, limit_sup)
+
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo de procesamiento del requerimiento elegido es: ' + str(elapsed_time_mseg) + ' ms' + '\n')
 
         print('=============== Req No. 4 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')
@@ -244,7 +278,15 @@ while True:
         lat_inf = input('Ingrese el limite inferior para la latitud (con 2 cifras decimales): \n>')
         lat_sup = input('Ingrese el limite superior para la latitud (con 2 cifras decimales): \n>')
 
+        start_time = time.process_time()
+
         getUfos5 = controller.getUfosByLonLat(requerimiento5, lon_inf, lon_sup, lat_inf, lat_sup)
+
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo de procesamiento del requerimiento elegido es: ' + str(elapsed_time_mseg) + ' ms' + '\n')
 
         print('=============== Req No. 5 Inputs ===============')
         print('UFO Sightings between latitude range of ' + str(lat_inf) + ' and ' + str(lat_sup))
