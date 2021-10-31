@@ -262,20 +262,26 @@ def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
     total_lon_lat = lt.size(lt_ufos_rango)
 
     lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByLatitude)
+    tam = lt.size(lt_ufos_rango_ord)
 
-    i = 1
     primeros_5 = lt.newList(datastructure = 'ARRAY_LIST')
-    while i <= 5:
-        x = lt.getElement(lt_ufos_rango_ord, i) 
-        lt.addLast(primeros_5, x)
-        i += 1
-
-    j = 4
     ultimos_5 = lt.newList(datastructure = 'ARRAY_LIST')
-    while j >= 0:
-        x = lt.getElement(lt_ufos_rango_ord, total_lon_lat - j)
-        lt.addLast(ultimos_5, x)
-        j -= 1
+    if tam < 10:
+        primeros_5 = lt_ufos_rango_ord
+    
+    else:
+
+        i = 1
+        while i <= 5:
+            x = lt.getElement(lt_ufos_rango_ord, i) 
+            lt.addLast(primeros_5, x)
+            i += 1
+
+        j = 4
+        while j >= 0:
+            x = lt.getElement(lt_ufos_rango_ord, total_lon_lat - j)
+            lt.addLast(ultimos_5, x)
+            j -= 1
 
     return total_lon_lat, primeros_5, ultimos_5
 
@@ -346,17 +352,21 @@ def cmpUfosByDate(ufo1, ufo2):
         return 0
 
 def cmpUfosByDuration(ufo1, ufo2):
-    duration1 = ufo1['duration (seconds)']
-    duration2 = ufo2['duration (seconds)']
+    duration1 = float(ufo1['duration (seconds)'])
+    duration2 = float(ufo2['duration (seconds)'])
 
-    if duration1 == '':
-        duration1 = 0.00
-
-    if duration2 == '':
-        duration2 = 0.00
-
-    if duration1 > duration2:
+    if duration1 < duration2:
         return 1
+    
+    elif duration1 == duration2:
+        city1 = ufo1['city']
+        city2 = ufo2['city']
+
+        if city1 < city2:
+            return 1
+    
+        else:
+            return 0
     
     else:
         return 0
