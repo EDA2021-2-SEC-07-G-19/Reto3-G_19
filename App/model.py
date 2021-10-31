@@ -46,6 +46,7 @@ def newAnalyzer():
     analyzer = {'ufos': None,
                 'cityIndex': None,
                 'durationIndex': None,
+                'durationHIndex': None,
                 'datetimeIndex': None,
                 'longitudeIndex':None,
                 }
@@ -70,14 +71,15 @@ def newAnalyzer():
 #===============================================
 def addUfo(analyzer, ufo):
     lt.addLast(analyzer['ufos'], ufo)
-    Requerimiento1(analyzer['cityIndex'], ufo)
-    Requerimiento2(analyzer['durationIndex'], ufo)
-    Requerimiento4(analyzer['datetimeIndex'], ufo)
-    Requerimiento5(analyzer['longitudeIndex'], ufo)
+    requerimiento1(analyzer['cityIndex'], ufo)
+    requerimiento2(analyzer['durationIndex'], ufo)
+    ##Requerimiento3(analyzer['durationHIndez'], ufo)
+    requerimiento4(analyzer['datetimeIndex'], ufo)
+    requerimiento5(analyzer['longitudeIndex'], ufo)
     
     return analyzer
 
-def Requerimiento1(mapa, ufo): #IMPORTANTE!!! Escogí una tabla de hash para hacer este requerimiento por lo cual no puedo retornar nada de info de árboles. Fue recomendado por el profesor y de hecho ya está completamente implementado
+def requerimiento1(mapa, ufo): #IMPORTANTE!!! Escogí una tabla de hash para hacer este requerimiento por lo cual no puedo retornar nada de info de árboles. Fue recomendado por el profesor y de hecho ya está completamente implementado
     city = ufo['city']
     llave_valor = mp.get(mapa, city)
     
@@ -92,7 +94,7 @@ def Requerimiento1(mapa, ufo): #IMPORTANTE!!! Escogí una tabla de hash para hac
 
     return mapa
 
-def Requerimiento2(mapa, ufo):
+def requerimiento2(mapa, ufo):
     duration = float(ufo['duration (seconds)'])
     llave_valor = om.get(mapa, duration)
 
@@ -106,8 +108,22 @@ def Requerimiento2(mapa, ufo):
         lt.addLast(lt_ufos_valor, ufo)
 
     return mapa
+def requerimiento3(mapa, ufo):
+    datetime = ufo['datetime']
+    datetime2 = dt.datetime.strptime(datetime, '%Y-%m-%d %H:%M:%S')
+    llave_valor = om.get(mapa, str(datetime2.time()))
+    if llave_valor is None:
+        lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
+        lt.addLast(lt_ufos2, ufo)
+        om.put(mapa, str(datetime2.time()), lt_ufos2)
+    
+    else:
+        lt_ufos_valor = me.getValue(llave_valor)
+        lt.addLast(lt_ufos_valor, ufo)
 
-def Requerimiento4(mapa, ufo):
+    return mapa
+    
+def requerimiento4(mapa, ufo):
     datetime = ufo['datetime']
     datetime2 = dt.datetime.strptime(datetime, '%Y-%m-%d %H:%M:%S')
     llave_valor = om.get(mapa, str(datetime2.date()))
@@ -123,7 +139,7 @@ def Requerimiento4(mapa, ufo):
 
     return mapa
 
-def Requerimiento5(mapa, ufo):
+def requerimiento5(mapa, ufo):
     longitude = ufo['longitude']
     llave_valor = om.get(mapa, longitude)
 
@@ -250,6 +266,50 @@ def getUfosByDatetime(mapa, limit_inf, limit_sup):
 
     i = 1
     primeros_3 = lt.newList()
+    print(lt_ufos_rango_ord)
+    while i <= 3:
+        x = lt.getElement(lt_ufos_rango_ord, i)
+        lt.addLast(primeros_3, x)
+        i += 1
+
+    j = 2
+    ultimos_3 = lt.newList()
+    while j >= 0:
+        x = lt.getElement(lt_ufos_rango_ord, tam - j)
+        lt.addLast(ultimos_3, x)
+        j -= 1
+
+    for ufo in lt.iterator(primeros_3):
+        if ufo['state'] == '':
+            ufo['state'] = 'Not Available'
+
+    for ufo in lt.iterator(ultimos_3):
+        if ufo['state'] == '':
+            ufo['state'] = 'Not Available'
+
+    return total_datetime, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
+def getUfosByTime(mapa, limit_inf, limit_sup):
+    total_datetime = om.size(mapa)
+    lt_valores = om.values(mapa, limit_inf, limit_sup)
+
+    contador_ufos = 0
+    lt_ufos_rango = lt.newList(datastructure = 'ARRAY_LIST')
+    for lista in lt.iterator(lt_valores):
+        for ufo in lt.iterator(lista):
+            contador_ufos += 1
+            lt.addLast(lt_ufos_rango, ufo)
+    
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByTime)
+    tam = lt.size(lt_ufos_rango_ord)
+
+    mayor_llave = om.minKey(mapa)
+    mayor_llave_valor = om.get(mapa, mayor_llave)
+    valor_mayor_llave = me.getValue(mayor_llave_valor)
+    tam_mayor_llave = lt.size(valor_mayor_llave)
+
+    i = 1
+    primeros_3 = lt.newList()
+    print(lt_ufos_rango_ord)
     while i <= 3:
         x = lt.getElement(lt_ufos_rango_ord, i)
         lt.addLast(primeros_3, x)
@@ -309,6 +369,11 @@ def ufosSize(analyzer):
 
     return lt.size(analyzer['ufos'])
 
+def avistamientosCiudad(catalog, ciudad):
+    lista= mp.get(catalog['cityIndex'], ciudad)
+    arbol=me.getValue(lista)
+    return arbol
+
 #=================================================================
 # Funciones utilizadas para comparar elementos dentro de una lista
 #=================================================================
@@ -364,6 +429,23 @@ def cmpUfosByDate(ufo1, ufo2):
         dateufo2 = '0001-01-01 00:00:00'
 
     if (dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')) < (dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')):
+        return 1
+    
+    else:
+        return 0
+def cmpUfosByTime(ufo1, ufo2):
+    dateufo1 = ufo1['datetime']
+    dateufo2 = ufo2['datetime']
+
+    if dateufo1 == '':
+        dateufo1 = '0001-01-01 00:00:00'
+
+    if dateufo2 == '':
+        dateufo2 = '0001-01-01 00:00:00'
+    date1=dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')
+    date2=dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')
+
+    if (date1.time()) < (date2.time):
         return 1
     
     else:
