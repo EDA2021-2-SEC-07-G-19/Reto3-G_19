@@ -39,7 +39,7 @@ operación solicitada
 #===================
 #Ruta a los archivos
 #===================
-ufosfile = 'UFOS//UFOS-utf8-large.csv'
+ufosfile = 'UFOS//UFOS-utf8-small.csv'
 cont = None
 
 #==============

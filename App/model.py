@@ -51,11 +51,8 @@ def newAnalyzer():
                 }
 
     analyzer['ufos'] = lt.newList(datastructure = 'ARRAY_LIST', cmpfunction = cmpListDate)
-    
-    analyzer['cityIndex'] = mp.newMap(500,
-                                    maptype = 'PROBING',
-                                    loadfactor = 0.5,
-                                    comparefunction = cmpMapCity)
+
+    analyzer['cityIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapCity)
 
     analyzer['durationIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDuration)
 
@@ -77,14 +74,14 @@ def addUfo(analyzer, ufo):
     
     return analyzer
 
-def Requerimiento1(mapa, ufo): #IMPORTANTE!!! Escogí una tabla de hash para hacer este requerimiento por lo cual no puedo retornar nada de info de árboles. Fue recomendado por el profesor y de hecho ya está completamente implementado
+def Requerimiento1(mapa, ufo):
     city = ufo['city']
-    llave_valor = mp.get(mapa, city)
+    llave_valor = om.get(mapa, city)
     
     if llave_valor is None:
         lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
         lt.addLast(lt_ufos2, ufo)
-        mp.put(mapa, city, lt_ufos2)
+        om.put(mapa, city, lt_ufos2)
     
     else:
         lt_ufos_valor = me.getValue(llave_valor)
@@ -142,10 +139,9 @@ def Requerimiento5(mapa, ufo):
 # Funciones para creacion de datos
 #=================================
 def getUfosByCity(mapa, ciudad):
-    keys_ciudades = mp.keySet(mapa)
-    total_ciudades = lt.size(keys_ciudades)
+    total_ciudades = om.size(mapa)
 
-    llave_valor_ciudad = mp.get(mapa, ciudad)
+    llave_valor_ciudad = om.get(mapa, ciudad)
     lt_ciudad = me.getValue(llave_valor_ciudad)
     total_casos_ciudad = lt.size(lt_ciudad)
     
@@ -178,7 +174,7 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
             contador_ufos += 1
             lt.addLast(lt_ufos_rango, ufo)
     
-    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDuration)
     tam = lt.size(lt_ufos_rango_ord)
 
     mayor_llave = om.maxKey(mapa)
@@ -265,7 +261,7 @@ def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
     
     total_lon_lat = lt.size(lt_ufos_rango)
 
-    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByLatitude)
 
     i = 1
     primeros_5 = lt.newList(datastructure = 'ARRAY_LIST')
@@ -301,11 +297,10 @@ def cmpListDate(date1, date2):
     else:
         return -1
 
-def cmpMapCity(keyname, city):
-    city_entry = me.getKey(city)
-    if (keyname == city_entry):
+def cmpMapCity(ciudad1, ciudad2):
+    if (ciudad1 == ciudad2):
         return 0
-    elif (keyname > city_entry):
+    elif (ciudad1 > ciudad2):
         return 1
     else:
         return -1
@@ -345,6 +340,54 @@ def cmpUfosByDate(ufo1, ufo2):
         dateufo2 = '0001-01-01 00:00:00'
 
     if (dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')) < (dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')):
+        return 1
+    
+    else:
+        return 0
+
+def cmpUfosByDuration(ufo1, ufo2):
+    duration1 = ufo1['duration (seconds)']
+    duration2 = ufo2['duration (seconds)']
+
+    if duration1 == '':
+        duration1 = 0.00
+
+    if duration2 == '':
+        duration2 = 0.00
+
+    if duration1 > duration2:
+        return 1
+    
+    else:
+        return 0
+
+def cmpUfosByCity(ufo1, ufo2):
+    city1 = ufo1['city']
+    city2 = ufo2['city']
+
+    if city1 == '':
+        city1 = 'Not Available'
+
+    if city2 == '':
+        city2 = 'Not Available'
+
+    if city1 < city2:
+        return 1
+    
+    else:
+        return 0
+
+def cmpUfosByLatitude(ufo1, ufo2):
+    latitude1 = ufo1['latitude']
+    latitude2 = ufo2['latitude']
+
+    if latitude1 == '':
+        latitude1 = 0.00
+
+    if latitude2 == '':
+        latitude2 = 0.00
+
+    if latitude1 < latitude2:
         return 1
     
     else:
