@@ -41,7 +41,7 @@ operación solicitada
 #===================
 #Ruta a los archivos
 #===================
-ufosfile = 'UFOS//UFOS-utf8-small.csv'
+ufosfile = 'UFOS//UFOS-utf8-50pct.csv'
 cont = None
 
 #==============
@@ -124,6 +124,7 @@ while True:
 
         mapa1 = cont['cityIndex']
         mapa2 = cont['durationIndex']
+        #mapa3 = cont['timeIndex']
         mapa4 = cont['datetimeIndex']
         mapa5 = cont['longitudeIndex']
         
@@ -131,7 +132,7 @@ while True:
 
         requerimiento1 = controller.requerimiento1(mapa1, ufo)
         requerimiento2 = controller.requerimiento2(mapa2, ufo)
-        requerimiento3 = controller.requerimiento3(mapa4, ufo)
+        #requerimiento3 = controller.requerimiento3(mapa3, ufo)
         requerimiento4 = controller.requerimiento4(mapa4, ufo)
         requerimiento5 = controller.requerimiento5(mapa5, ufo)
 
@@ -229,7 +230,7 @@ while True:
         limit_inf = input('Ingrese el límite inferior de duración en el formato HH:MM \n>')
         limit_sup = input('Ingrese el límite superior de duración en el formato HH:MM \n>')
 
-        getUfos4 = controller.getUfosByTime(requerimiento3, limit_inf, limit_sup)
+        #getUfos4 = controller.getUfosByTime(requerimiento3, limit_inf, limit_sup)
 
         print('=============== Req No. 3 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')

@@ -46,7 +46,7 @@ def newAnalyzer():
     analyzer = {'ufos': None,
                 'cityIndex': None,
                 'durationIndex': None,
-                'durationHIndex': None,
+                'timeIndex': None,
                 'datetimeIndex': None,
                 'longitudeIndex':None,
                 }
@@ -56,6 +56,8 @@ def newAnalyzer():
     analyzer['cityIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapCity)
 
     analyzer['durationIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDuration)
+
+    analyzer['timeIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDate)
 
     analyzer['datetimeIndex'] = om.newMap(omaptype = 'RBT', comparefunction = cmpMapDate)
 
