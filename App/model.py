@@ -105,6 +105,7 @@ def requerimiento2(mapa, ufo):
         lt.addLast(lt_ufos_valor, ufo)
 
     return mapa
+
 def requerimiento3(mapa, ufo):
     datetime = ufo['datetime']
     datetime2 = dt.datetime.strptime(datetime, '%Y-%m-%d %H:%M:%S')
@@ -222,7 +223,7 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
 
     return total_duraciones, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
 
-def getUfosByDatetime(mapa, limit_inf, limit_sup):
+def getUfosByTime(mapa, limit_inf, limit_sup):
     total_datetime = om.size(mapa)
     lt_valores = om.values(mapa, limit_inf, limit_sup)
 
@@ -233,7 +234,7 @@ def getUfosByDatetime(mapa, limit_inf, limit_sup):
             contador_ufos += 1
             lt.addLast(lt_ufos_rango, ufo)
     
-    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByTime)
     tam = lt.size(lt_ufos_rango_ord)
 
     mayor_llave = om.minKey(mapa)
@@ -265,7 +266,8 @@ def getUfosByDatetime(mapa, limit_inf, limit_sup):
             ufo['state'] = 'Not Available'
 
     return total_datetime, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
-def getUfosByTime(mapa, limit_inf, limit_sup):
+
+def getUfosByDatetime(mapa, limit_inf, limit_sup):
     total_datetime = om.size(mapa)
     lt_valores = om.values(mapa, limit_inf, limit_sup)
 
@@ -276,7 +278,7 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
             contador_ufos += 1
             lt.addLast(lt_ufos_rango, ufo)
     
-    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByTime)
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
     tam = lt.size(lt_ufos_rango_ord)
 
     mayor_llave = om.minKey(mapa)
@@ -286,7 +288,6 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
 
     i = 1
     primeros_3 = lt.newList()
-    print(lt_ufos_rango_ord)
     while i <= 3:
         x = lt.getElement(lt_ufos_rango_ord, i)
         lt.addLast(primeros_3, x)
@@ -415,6 +416,7 @@ def cmpUfosByDate(ufo1, ufo2):
     
     else:
         return 0
+
 def cmpUfosByTime(ufo1, ufo2):
     dateufo1 = ufo1['datetime']
     dateufo2 = ufo2['datetime']
@@ -427,7 +429,7 @@ def cmpUfosByTime(ufo1, ufo2):
     date1=dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')
     date2=dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')
 
-    if (date1.time()) < (date2.time):
+    if (date1.time()) < (date2.time()):
         return 1
     else: 
         return 0
