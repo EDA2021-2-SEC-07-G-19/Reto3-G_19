@@ -58,7 +58,7 @@ def printMenu():
     print("5- Requerimiento 3")
     print("6- Requerimiento 4")
     print("7- Requerimiento 5")
-    print("8- Bono")
+    print("8- Requerimiento 6")
     print("0- Salir")
     print("*******************************************")
 
@@ -236,10 +236,9 @@ while True:
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')
         print('=============== Req No. 3 Answer ===============')
         print('There are ' + str(getUfos3[0]) + ' UFO sightings with different times [hh-mm-ss]...')
-        print('The 5 latest UFO sightings time is: ')
+        print('The latest UFO sightings time is: ')
 
         tabla5_1 = pt.PrettyTable(['Date', 'Count'])
-
 
         tabla5_1.max_width = 15
         

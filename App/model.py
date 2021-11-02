@@ -249,12 +249,9 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
     mayor_llave_valor = om.get(mapa, mayor_llave)
     valor_mayor_llave = me.getValue(mayor_llave_valor)
     tam_mayor_llave = lt.size(valor_mayor_llave)
-    
-    
 
     i = 1
     primeros_3 = lt.newList()
-    print(lt_ufos_rango_ord)
     while i <= 3 and i <=tam:
         x = lt.getElement(lt_ufos_rango_ord, i)
         lt.addLast(primeros_3, x)
