@@ -59,12 +59,13 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
 
     return model.getUfosByDuration(mapa, limit_inf, limit_sup)
 
-def getUfosByDatetime(mapa, limit_inf, limit_sup):
-
-    return model.getUfosByDatetime(mapa, limit_inf, limit_sup)
 def getUfosByTime(mapa, limit_inf, limit_sup):
 
     return model.getUfosByTime(mapa, limit_inf, limit_sup)
+
+def getUfosByDatetime(mapa, limit_inf, limit_sup):
+
+    return model.getUfosByDatetime(mapa, limit_inf, limit_sup)
 
 def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
 
@@ -84,6 +85,7 @@ def requerimiento1(mapa, ufo):
 def requerimiento2(mapa, ufo):
 
     return model.requerimiento2(mapa, ufo)
+
 def requerimiento3(mapa, ufo):
 
     return model.requerimiento3(mapa, ufo)
@@ -95,6 +97,10 @@ def requerimiento4(mapa, ufo):
 def requerimiento5(mapa, ufo):
 
     return model.requerimiento5(mapa, ufo)
+    
+def bono(latitud,longitud,ufos):
+    
+    return model.bono(latitud, longitud, ufos)
 
 def ufosSize(analyzer):
     
