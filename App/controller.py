@@ -98,9 +98,9 @@ def requerimiento5(mapa, ufo):
 
     return model.requerimiento5(mapa, ufo)
     
-def bono(latitud,longitud,ufos):
+def requerimiento6(latitud, longitud, ufos):
     
-    return model.bono(latitud, longitud, ufos)
+    return model.requerimiento6(latitud, longitud, ufos)
 
 def ufosSize(analyzer):
     

@@ -349,7 +349,9 @@ while True:
         tabla7.hrules = ALL
 
         print(tabla7)
-    elif int(inputs[0])==8:
+    
+    elif int(inputs[0]) == 8:
+
         lon_inf = input('Ingrese el limite inferior para la longitud (con 2 cifras decimales): \n>')
         lon_sup = input('Ingrese el limite superior para la longitud (con 2 cifras decimales): \n>')
         lat_inf = input('Ingrese el limite inferior para la latitud (con 2 cifras decimales): \n>')
@@ -357,19 +359,18 @@ while True:
 
         start_time = time.process_time()
 
-        getUfos5 = controller.getUfosByLonLat(requerimiento5, lon_inf, lon_sup, lat_inf, lat_sup)
+        getUfos6 = controller.getUfosByLonLat(requerimiento5, lon_inf, lon_sup, lat_inf, lat_sup)
 
-        latitud=(float(lat_inf)+float(lat_sup))/2
-        longitud=(float(lon_inf)+float(lon_sup))/2
-        mapa=controller.bono(latitud,longitud,getUfos5[3])
+        latitud = (float(lat_inf)+float(lat_sup))/2
+        longitud = (float(lon_inf)+float(lon_sup))/2
+        mapa = controller.requerimiento6(latitud, longitud, getUfos6[3])
         mapa.save('mapita.html')
+        
         print(mapa)
-
 
         stop_time = time.process_time()
 
         elapsed_time_mseg = round((stop_time - start_time)*1000,2)
-
 
     else:
         sys.exit(0)
