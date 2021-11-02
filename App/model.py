@@ -74,7 +74,7 @@ def addUfo(analyzer, ufo):
     lt.addLast(analyzer['ufos'], ufo)
     requerimiento1(analyzer['cityIndex'], ufo)
     requerimiento2(analyzer['durationIndex'], ufo)
-    ##Requerimiento3(analyzer['durationHIndez'], ufo)
+    requerimiento3(analyzer['timeIndex'], ufo)
     requerimiento4(analyzer['datetimeIndex'], ufo)
     requerimiento5(analyzer['longitudeIndex'], ufo)
     
@@ -156,9 +156,10 @@ def requerimiento5(mapa, ufo):
 
     return mapa
 def bono(latitud, longitud,ufos):
-    mapa=folium.Map(location= [latitud,longitud], zoom_start=14, control_scale=True)
-    for ufo in ufos:
-        folium.Marker([ufo['latitude'], ufo['longitude']], popup=ufo['city']).add_to(mapa)
+    mapa=fo.Map(location= [latitud,longitud], zoom_start=8, control_scale=True)
+    for i in range(1, lt.size(ufos)+1):
+        ufo=lt.getElement(ufos, i)
+        fo.Marker([ufo['latitude'], ufo['longitude']], popup=ufo['shape'], icon=fo.Icon(color='pink', icon='reddit-alien', prefix='fa', icon_color='lightgreen')).add_to(mapa)
     
     return mapa
 
@@ -244,25 +245,29 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
             contador_ufos += 1
             lt.addLast(lt_ufos_rango, ufo)
     
-    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByTime)
+    lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
     tam = lt.size(lt_ufos_rango_ord)
-
-    mayor_llave = om.minKey(mapa)
-    mayor_llave_valor = om.get(mapa, mayor_llave)
-    valor_mayor_llave = me.getValue(mayor_llave_valor)
-    tam_mayor_llave = lt.size(valor_mayor_llave)
+    lista=lt.newList('ARRAY_LIST')
+    while lt.size(lista)<6:
+        mayor_llave = om.maxKey(mapa)
+        mayor_llave_valor = om.get(mapa, mayor_llave)
+        valor_mayor_llave = me.getValue(mayor_llave_valor)
+        tam_mayor_llave = lt.size(valor_mayor_llave)
+        tupla=(mayor_llave, tam_mayor_llave)
+        lt.addLast(lista, tupla)
+        om.deleteMax(mapa)
 
     i = 1
     primeros_3 = lt.newList()
     print(lt_ufos_rango_ord)
-    while i <= 3:
+    while i <= 3 and i <=tam:
         x = lt.getElement(lt_ufos_rango_ord, i)
         lt.addLast(primeros_3, x)
         i += 1
 
     j = 2
     ultimos_3 = lt.newList()
-    while j >= 0:
+    while j >= 0 and j + 3 <= tam:
         x = lt.getElement(lt_ufos_rango_ord, tam - j)
         lt.addLast(ultimos_3, x)
         j -= 1
@@ -275,7 +280,7 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
         if ufo['state'] == '':
             ufo['state'] = 'Not Available'
 
-    return total_datetime, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
+    return total_datetime, contador_ufos, primeros_3, ultimos_3, lista
 
 def getUfosByDatetime(mapa, limit_inf, limit_sup):
     total_datetime = om.size(mapa)
@@ -354,7 +359,7 @@ def getUfosByLonLat(mapa, lon_inf, lon_sup, lat_inf, lat_sup):
             lt.addLast(ultimos_5, x)
             j -= 1
 
-    return total_lon_lat, primeros_5, ultimos_5
+    return total_lon_lat, primeros_5, ultimos_5, lt_ufos_rango_ord
 
 #======================
 # Funciones de consulta
@@ -439,7 +444,7 @@ def cmpUfosByTime(ufo1, ufo2):
     date1=dt.datetime.strptime(dateufo1, '%Y-%m-%d %H:%M:%S')
     date2=dt.datetime.strptime(dateufo2, '%Y-%m-%d %H:%M:%S')
 
-    if (date1.time()) < (date2.time()):
+    if (date1.time()) <= (date2.time()):
         return 1
     else: 
         return 0

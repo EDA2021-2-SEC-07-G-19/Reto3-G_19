@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f171272310ca43d0914f68cefadb19c5 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_f171272310ca43d0914f68cefadb19c5" ></div>
+        
+</body>
+<script>    
+    
+            var map_f171272310ca43d0914f68cefadb19c5 = L.map(
+                "map_f171272310ca43d0914f68cefadb19c5",
+                {
+                    center: [34.165, -106.025],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 8,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+            L.control.scale().addTo(map_f171272310ca43d0914f68cefadb19c5);
+
+            
+
+        
+    
+            var tile_layer_aba59b71bc99416993df13b264e9f5c7 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var marker_3441fbfd11fa4b6e98e67c8db682b206 = L.marker(
+                [31.7586111, -106.4863889],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_aaf349d66f8849febb2a64c310d1c7dd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_3441fbfd11fa4b6e98e67c8db682b206.setIcon(icon_aaf349d66f8849febb2a64c310d1c7dd);
+        
+    
+        var popup_d51b147bd9794d009aefa91cef8f32b4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_79fc7fb00124477887f24ec75134043d = $(`<div id="html_79fc7fb00124477887f24ec75134043d" style="width: 100.0%; height: 100.0%;">unknown</div>`)[0];
+            popup_d51b147bd9794d009aefa91cef8f32b4.setContent(html_79fc7fb00124477887f24ec75134043d);
+        
+
+        marker_3441fbfd11fa4b6e98e67c8db682b206.bindPopup(popup_d51b147bd9794d009aefa91cef8f32b4)
+        ;
+
+        
+    
+    
+            var marker_c96def8969944eb09dc656e38d08798d = L.marker(
+                [32.77, -108.2797222],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_a3a1ff2b8d8c49d6b023fdfc074427e8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_c96def8969944eb09dc656e38d08798d.setIcon(icon_a3a1ff2b8d8c49d6b023fdfc074427e8);
+        
+    
+        var popup_d99e08e7e2f24387b54ec92a4fd8345d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_71393049443c41daa6f9861de49555d4 = $(`<div id="html_71393049443c41daa6f9861de49555d4" style="width: 100.0%; height: 100.0%;">light</div>`)[0];
+            popup_d99e08e7e2f24387b54ec92a4fd8345d.setContent(html_71393049443c41daa6f9861de49555d4);
+        
+
+        marker_c96def8969944eb09dc656e38d08798d.bindPopup(popup_d99e08e7e2f24387b54ec92a4fd8345d)
+        ;
+
+        
+    
+    
+            var marker_fd1626b3dc9c43a4be4f0a302de466fb = L.marker(
+                [33.3941667, -104.5225],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_2c29ef9a6144479cae5bc31020e75641 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_fd1626b3dc9c43a4be4f0a302de466fb.setIcon(icon_2c29ef9a6144479cae5bc31020e75641);
+        
+    
+        var popup_c7ea56e9ec4d475a8f1d3b704f3b7fc5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7f444867dbb84371a2e9d052c4fc96ed = $(`<div id="html_7f444867dbb84371a2e9d052c4fc96ed" style="width: 100.0%; height: 100.0%;">disk</div>`)[0];
+            popup_c7ea56e9ec4d475a8f1d3b704f3b7fc5.setContent(html_7f444867dbb84371a2e9d052c4fc96ed);
+        
+
+        marker_fd1626b3dc9c43a4be4f0a302de466fb.bindPopup(popup_c7ea56e9ec4d475a8f1d3b704f3b7fc5)
+        ;
+
+        
+    
+    
+            var marker_0c840c67bc5e4c8ebf912b5c0ba92ea6 = L.marker(
+                [35.0844444, -106.6505556],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_2280ee2c638846f1a8ddd86fa8ceaa4a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_0c840c67bc5e4c8ebf912b5c0ba92ea6.setIcon(icon_2280ee2c638846f1a8ddd86fa8ceaa4a);
+        
+    
+        var popup_4e28c00c04e5472a85c80734e19c8fe5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_253caf0ab2b8436c820935e0e014b642 = $(`<div id="html_253caf0ab2b8436c820935e0e014b642" style="width: 100.0%; height: 100.0%;">flash</div>`)[0];
+            popup_4e28c00c04e5472a85c80734e19c8fe5.setContent(html_253caf0ab2b8436c820935e0e014b642);
+        
+
+        marker_0c840c67bc5e4c8ebf912b5c0ba92ea6.bindPopup(popup_4e28c00c04e5472a85c80734e19c8fe5)
+        ;
+
+        
+    
+    
+            var marker_ddb5dcf2cc24458d9605fbbf2e1d2b2e = L.marker(
+                [35.0844444, -106.6505556],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_e90bec628c874514a0fd75fee0493f02 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_ddb5dcf2cc24458d9605fbbf2e1d2b2e.setIcon(icon_e90bec628c874514a0fd75fee0493f02);
+        
+    
+        var popup_f870759f21414a2ca2100406d1711e19 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_79f6fa17d4294d99a481f201fd0c7236 = $(`<div id="html_79f6fa17d4294d99a481f201fd0c7236" style="width: 100.0%; height: 100.0%;">sphere</div>`)[0];
+            popup_f870759f21414a2ca2100406d1711e19.setContent(html_79f6fa17d4294d99a481f201fd0c7236);
+        
+
+        marker_ddb5dcf2cc24458d9605fbbf2e1d2b2e.bindPopup(popup_f870759f21414a2ca2100406d1711e19)
+        ;
+
+        
+    
+    
+            var marker_ac39e3e251d34c90a4790aac130a7abb = L.marker(
+                [35.1716667, -103.7244444],
+                {}
+            ).addTo(map_f171272310ca43d0914f68cefadb19c5);
+        
+    
+            var icon_3dc29ab7708f43ee9b2d67fa93235fb1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "reddit-alien", "iconColor": "lightgreen", "iconSize": 190, "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_ac39e3e251d34c90a4790aac130a7abb.setIcon(icon_3dc29ab7708f43ee9b2d67fa93235fb1);
+        
+    
+        var popup_9bde5dc08c824c778368a6cbb9c88a65 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1b3b8213a73a49c693520ea292f3c8e0 = $(`<div id="html_1b3b8213a73a49c693520ea292f3c8e0" style="width: 100.0%; height: 100.0%;">flash</div>`)[0];
+            popup_9bde5dc08c824c778368a6cbb9c88a65.setContent(html_1b3b8213a73a49c693520ea292f3c8e0);
+        
+
+        marker_ac39e3e251d34c90a4790aac130a7abb.bindPopup(popup_9bde5dc08c824c778368a6cbb9c88a65)
+        ;
+
+        
+    
+</script>

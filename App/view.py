@@ -41,7 +41,7 @@ operación solicitada
 #===================
 #Ruta a los archivos
 #===================
-ufosfile = 'UFOS//UFOS-utf8-30pct.csv'
+ufosfile = 'UFOS//UFOS-utf8-small.csv'
 cont = None
 
 #==============
@@ -58,6 +58,7 @@ def printMenu():
     print("5- Requerimiento 3")
     print("6- Requerimiento 4")
     print("7- Requerimiento 5")
+    print("8- Bono")
     print("0- Salir")
     print("*******************************************")
 
@@ -235,12 +236,15 @@ while True:
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')
         print('=============== Req No. 3 Answer ===============')
         print('There are ' + str(getUfos3[0]) + ' UFO sightings with different times [hh-mm-ss]...')
-        print('The latest UFO sightings date is: ')
+        print('The 5 latest UFO sightings time is: ')
 
         tabla5_1 = pt.PrettyTable(['Date', 'Count'])
 
+
         tabla5_1.max_width = 15
-        tabla5_1.add_row([getUfos3[4], getUfos3[5]])
+        for i in range(1, lt.size(getUfos3[4])):
+            x=lt.getElement(getUfos3[4], i)
+            tabla5_1.add_row([x[0], x[1]])
         tabla5_1.hrules = ALL
         print(tabla5_1)
         print('\n')
@@ -355,9 +359,12 @@ while True:
 
         getUfos5 = controller.getUfosByLonLat(requerimiento5, lon_inf, lon_sup, lat_inf, lat_sup)
 
-        latitud=(lat_inf+lat_sup)/2
-        longitud=(lon_inf+lon_sup)/2
-        mapa=controller.bono(latitud,longitud,getUfos5)
+        latitud=(float(lat_inf)+float(lat_sup))/2
+        longitud=(float(lon_inf)+float(lon_sup))/2
+        mapa=controller.bono(latitud,longitud,getUfos5[3])
+        mapa.save('mapita.html')
+        print(mapa)
+
 
         stop_time = time.process_time()
 
