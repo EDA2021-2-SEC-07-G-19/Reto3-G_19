@@ -28,7 +28,6 @@
 import config as cf
 import datetime as dt
 import folium as fo
-import pandas as pd
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
@@ -36,10 +35,6 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as ms
 assert cf
 
-"""
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
-"""
 #========================
 # Construccion de modelos
 #========================
@@ -114,6 +109,7 @@ def requerimiento3(mapa, ufo):
     datetime = ufo['datetime']
     datetime2 = dt.datetime.strptime(datetime, '%Y-%m-%d %H:%M:%S')
     llave_valor = om.get(mapa, str(datetime2.time()))
+    
     if llave_valor is None:
         lt_ufos2 = lt.newList(datastructure = 'ARRAY_LIST')
         lt.addLast(lt_ufos2, ufo)
@@ -155,11 +151,13 @@ def requerimiento5(mapa, ufo):
         lt.addLast(lt_ufos_valor, ufo)
 
     return mapa
-def bono(latitud, longitud,ufos):
-    mapa=fo.Map(location= [latitud,longitud], zoom_start=8, control_scale=True)
+
+def requerimiento6(latitud, longitud, ufos):
+    mapa = fo.Map(location = [latitud,longitud], zoom_start = 8, control_scale = True)
+    
     for i in range(1, lt.size(ufos)+1):
-        ufo=lt.getElement(ufos, i)
-        fo.Marker([ufo['latitude'], ufo['longitude']], popup=ufo['shape'], icon=fo.Icon(color='pink', icon='reddit-alien', prefix='fa', icon_color='lightgreen')).add_to(mapa)
+        ufo = lt.getElement(ufos, i)
+        fo.Marker([ufo['latitude'], ufo['longitude']], popup = ufo['shape'], icon = fo.Icon(color='pink', icon = 'reddit-alien', prefix = 'fa', icon_color = 'lightgreen')).add_to(mapa)
     
     return mapa
 
