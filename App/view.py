@@ -242,9 +242,8 @@ while True:
 
 
         tabla5_1.max_width = 15
-        for i in range(1, lt.size(getUfos3[4])):
-            x=lt.getElement(getUfos3[4], i)
-            tabla5_1.add_row([x[0], x[1]])
+        
+        tabla5_1.add_row([getUfos3[4], getUfos3[5]])
         tabla5_1.hrules = ALL
         print(tabla5_1)
         print('\n')

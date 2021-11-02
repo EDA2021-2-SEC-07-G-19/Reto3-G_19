@@ -247,15 +247,12 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
     
     lt_ufos_rango_ord = ms.sort(lt_ufos_rango, cmpUfosByDate)
     tam = lt.size(lt_ufos_rango_ord)
-    lista=lt.newList('ARRAY_LIST')
-    while lt.size(lista)<6:
-        mayor_llave = om.maxKey(mapa)
-        mayor_llave_valor = om.get(mapa, mayor_llave)
-        valor_mayor_llave = me.getValue(mayor_llave_valor)
-        tam_mayor_llave = lt.size(valor_mayor_llave)
-        tupla=(mayor_llave, tam_mayor_llave)
-        lt.addLast(lista, tupla)
-        om.deleteMax(mapa)
+    mayor_llave = om.maxKey(mapa)
+    mayor_llave_valor = om.get(mapa, mayor_llave)
+    valor_mayor_llave = me.getValue(mayor_llave_valor)
+    tam_mayor_llave = lt.size(valor_mayor_llave)
+    
+    
 
     i = 1
     primeros_3 = lt.newList()
@@ -280,7 +277,7 @@ def getUfosByTime(mapa, limit_inf, limit_sup):
         if ufo['state'] == '':
             ufo['state'] = 'Not Available'
 
-    return total_datetime, contador_ufos, primeros_3, ultimos_3, lista
+    return total_datetime, contador_ufos, primeros_3, ultimos_3, mayor_llave, tam_mayor_llave
 
 def getUfosByDatetime(mapa, limit_inf, limit_sup):
     total_datetime = om.size(mapa)
