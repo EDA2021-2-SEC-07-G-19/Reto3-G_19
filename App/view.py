@@ -363,13 +363,17 @@ while True:
         longitud = (float(lon_inf)+float(lon_sup))/2
         mapa = controller.requerimiento6(latitud, longitud, getUfos6[3])
         mapa.save('mapita.html')
-        
-        print(mapa)
 
         stop_time = time.process_time()
 
         elapsed_time_mseg = round((stop_time - start_time)*1000,2)
 
+        print('=============== Req No. 6 Inputs ===============')
+        print('UFO Sightings between latitude range of ' + str(lat_inf) + ' and ' + str(lat_sup))
+        print('plus longitude range of ' + str(lon_inf) + ' and ' + str(lon_sup) + '\n')
+        print('=============== Req No. 6 Answer ===============')
+        print('Check mapita.html')
+    
     else:
         sys.exit(0)
 sys.exit(0)

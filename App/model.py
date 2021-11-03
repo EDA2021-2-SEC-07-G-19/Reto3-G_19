@@ -360,11 +360,6 @@ def ufosSize(analyzer):
 
     return lt.size(analyzer['ufos'])
 
-def avistamientosCiudad(catalog, ciudad):
-    lista= mp.get(catalog['cityIndex'], ciudad)
-    arbol=me.getValue(lista)
-    return arbol
-
 #=================================================================
 # Funciones utilizadas para comparar elementos dentro de una lista
 #=================================================================
