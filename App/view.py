@@ -58,7 +58,7 @@ def printMenu():
     print("5- Requerimiento 3")
     print("6- Requerimiento 4")
     print("7- Requerimiento 5")
-    print("8- Bono")
+    print("8- Requerimiento 6")
     print("0- Salir")
     print("*******************************************")
 
@@ -250,7 +250,6 @@ while True:
 
         tabla5_1 = pt.PrettyTable(['Date', 'Count'])
 
-
         tabla5_1.max_width = 15
         
         tabla5_1.add_row([getUfos3[4], getUfos3[5]])
@@ -374,13 +373,17 @@ while True:
         longitud = (float(lon_inf)+float(lon_sup))/2
         mapa = controller.requerimiento6(latitud, longitud, getUfos6[3])
         mapa.save('mapita.html')
-        
-        print(mapa)
 
         stop_time = time.process_time()
 
         elapsed_time_mseg = round((stop_time - start_time)*1000,2)
 
+        print('=============== Req No. 6 Inputs ===============')
+        print('UFO Sightings between latitude range of ' + str(lat_inf) + ' and ' + str(lat_sup))
+        print('plus longitude range of ' + str(lon_inf) + ' and ' + str(lon_sup) + '\n')
+        print('=============== Req No. 6 Answer ===============')
+        print('Check mapita.html')
+    
     else:
         sys.exit(0)
 sys.exit(0)

@@ -105,7 +105,4 @@ def requerimiento6(latitud, longitud, ufos):
 def ufosSize(analyzer):
     
     return model.ufosSize(analyzer)
-
-def avistamientosCiudad(catalog, ciudad):
-    arbol=model.avistamientosCiudad(catalog,ciudad)
-    return arbol
+    
