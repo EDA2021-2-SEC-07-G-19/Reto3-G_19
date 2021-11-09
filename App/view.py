@@ -41,7 +41,7 @@ operación solicitada
 #===================
 #Ruta a los archivos
 #===================
-ufosfile = 'UFOS//UFOS-utf8-small.csv'
+ufosfile = 'UFOS//UFOS-utf8-large.csv'
 cont = None
 
 #==============
@@ -229,14 +229,24 @@ while True:
     elif int(inputs[0]) == 5:
         limit_inf = input('Ingrese el límite inferior de duración en el formato HH:MM \n>')
         limit_sup = input('Ingrese el límite superior de duración en el formato HH:MM \n>')
+        start_time = time.process_time()
 
         getUfos3 = controller.getUfosByTime(requerimiento3, limit_inf, limit_sup)
+    
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = round((stop_time - start_time)*1000,2)
+
+        print('El tiempo de procesamiento del requerimiento elegido es: ' + str(elapsed_time_mseg) + ' ms' + '\n')
+
+
+        
 
         print('=============== Req No. 3 Inputs ===============')
         print('UFO Sightings between ' + str(limit_inf) + ' and ' + str(limit_sup) + '\n')
         print('=============== Req No. 3 Answer ===============')
         print('There are ' + str(getUfos3[0]) + ' UFO sightings with different times [hh-mm-ss]...')
-        print('The 5 latest UFO sightings time is: ')
+        print('The latest UFO sightings time is: ')
 
         tabla5_1 = pt.PrettyTable(['Date', 'Count'])
 

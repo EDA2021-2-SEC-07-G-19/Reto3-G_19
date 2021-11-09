@@ -174,7 +174,7 @@ def getUfosByCity(mapa, ciudad):
     lt_ciudad_ord = ms.sort(lt_ciudad, cmpUfosByDate)
 
     i = 1
-    primeros_3 = lt.newList()
+    primeros_3 = lt.newList('ARRAY_LIST')
     while i <= 3:
         x = lt.getElement(lt_ciudad_ord, i)
         lt.addLast(primeros_3, x)
@@ -209,7 +209,7 @@ def getUfosByDuration(mapa, limit_inf, limit_sup):
     tam_mayor_llave = lt.size(valor_mayor_llave)
 
     i = 1
-    primeros_3 = lt.newList()
+    primeros_3 = lt.newList('ARRAY_LIST')
     while i <= 3:
         x = lt.getElement(lt_ufos_rango_ord, i)
         lt.addLast(primeros_3, x)
