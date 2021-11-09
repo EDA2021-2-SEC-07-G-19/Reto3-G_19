@@ -157,7 +157,7 @@ def requerimiento6(latitud, longitud, ufos):
     
     for i in range(1, lt.size(ufos)+1):
         ufo = lt.getElement(ufos, i)
-        fo.Marker([ufo['latitude'], ufo['longitude']], popup = ufo['shape'], icon = fo.Icon(color='pink', icon = 'reddit-alien', prefix = 'fa', icon_color = 'lightgreen')).add_to(mapa)
+        fo.Marker([ufo['latitude'], ufo['longitude']], popup = ufo, icon = fo.Icon(color='pink', icon = 'reddit-alien', prefix = 'fa', icon_color = 'lightgreen')).add_to(mapa)
     
     return mapa
 
